@@ -10,6 +10,21 @@ The file was originally in csv
 
 The data has no problems, but its very verbose and has many un-needed fields. So I got rid of any field that wasn't related to the assignment, to make the data easier to use.  
 
+```python
+keep = ["host_id", "host_is_superhost", "name", "price", "neighbourhood", "host_name", "beds", "neighbourhood_group_cleansed", "review_scores_rating"]
+col_to_delete = []
+for row in reader:
+            if first_row:
+                for index, category in enumerate(row):
+                    if category not in keep:
+                        col_to_delete.append(index)
+                first_row = False
+            row = [row[i] for i in range(len(row)) if i not in col_to_delete]
+            writer.writerow(row)
+```
+In this code segement, I scan through the rows and add every column index I don't want into an array, and then when I write to a new csv file, I make sure to not add the indexes of the columns I don't want. This allows me to clean up the data and only be left with fields that are needed for this assignment.
+
+
 | name                                                          | host_id | host_name          | host_is_superhost | neighbourhood                     | neighbourhood_group_cleansed | beds | price   | review_scores_rating |
 |---------------------------------------------------------------|---------|--------------------|-------------------|----------------------------------|------------------------------|------|---------|----------------------|
 | Boutique hotel in Antwerp · ★5.0 · 1 bedroom · 1 bed · 1 private bath | 234077  | Karin              | t                 |                                  |                              | 1    | $188.00 | 5.0                  |
